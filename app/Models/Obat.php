@@ -11,6 +11,7 @@ class Obat extends Model
 
     public $fillable = [
         'kode_obat',
-        'ranking'
+        'ranking',
+        'nilai_akhir'
     ];
 }
