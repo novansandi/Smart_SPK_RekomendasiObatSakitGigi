@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     //post function login
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $credentials = $request->validate([
             'name' => 'required|min:8|max:50',
             'password' => 'required|min:8|max:100'
         ]);
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended("dashboard");
         }
@@ -23,8 +24,9 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(Request $request){
-        if(Auth::user()){
+    public function logout(Request $request)
+    {
+        if (Auth::user()) {
             $request->session()->invalidate();
         }
         return redirect()->intended("login");
