@@ -136,10 +136,15 @@ class KriteriaComponent extends Component
 
         // $this->rangeBobot = $this->maxBobot - $this->minBobot;
 
-        $sumBobot = Kriteria::selectRaw('sum(bobot) as sum')
+        $sumBobot = Kriteria::selectRaw('sum(bobot) as sum, max(bobot) as max, min(bobot) as min')
             ->where('is_deleted', '=', false)
             ->get();
-        if($sumBobot)$this->rangeBobot = $sumBobot[0]["sum"];
+        if($sumBobot){
+            $this->rangeBobot = $sumBobot[0]["sum"];
+            $this->maxBobot = $sumBobot[0]["max"];
+            $this->minBobot = $sumBobot[0]["min"];
+        }
+
     }
 
     public function render()

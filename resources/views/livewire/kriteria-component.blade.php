@@ -15,6 +15,8 @@
                     <th scope="col">Kriteria</th>
                     <th scope="col">Bobot</th>
                     <th scope="col">Normalisasi Bobot</th>
+                    <th scope="col">Benefit</th>
+                    <th scope="col">Cost</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -25,6 +27,8 @@
                         <td>{{ $kriteria['nama_kriteria'] }}</td>
                         <td>{{ $kriteria['bobot'] }}</td>
                         <td>{{ $rangeBobot > 0 ? ($kriteria['bobot'] - $minBobot) / $rangeBobot : '-' }}</td>
+                        <td>{{ $maxBobot != $minBobot ? ($maxBobot - $kriteria['bobot']) / ($maxBobot - $minBobot) : 0 }}</td>
+                        <td>{{ $maxBobot != $minBobot ? ($kriteria['bobot'] - $minBobot) / ($maxBobot - $minBobot) : 0 }}</td>
                         <td class="d-flex justify-content-end">
                             <button type="button" class="btn btn-warning" style="margin-right: 15px"
                                 data-bs-toggle="modal" data-bs-target="#kriteriaModal"
@@ -45,7 +49,7 @@
                         Jumlah
                     </td>
                     <td>{{$rangeBobot}}</td>
-                    <td colspan="2"></td>
+                    <td colspan="4"></td>
                 </tr>
             </tfoot>
         </table>
