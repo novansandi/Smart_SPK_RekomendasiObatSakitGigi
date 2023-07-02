@@ -10,9 +10,18 @@
         <table class="table mt-4">
             <thead class="table-dark">
                 <tr class="text-center">
-                    <th scope="col">Ranking</th>
-                    <th scope="col">Kode Obat</th>
-                    <th scope="col">Nilai Akhir</th>
+                    <th scope="col" rowspan="2" style="vertical-align: middle">Ranking</th>
+                    <th scope="col" rowspan="2" style="vertical-align: middle">Kode Obat</th>
+                    @foreach ($listKriteria as $kriteria)
+                        <th scope="col" colspan="2">{{$kriteria["nama_kriteria"]}}</th>
+                    @endforeach
+                    <th scope="col" rowspan="2" style="vertical-align: middle">Nilai Akhir</th>
+                </tr>
+                <tr class="text-center">
+                    @foreach ($listKriteria as $kriteria)
+                        <th scope="col">cost</th>
+                        <th scope="col">benefit</th>
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +29,10 @@
                     <tr class="text-center">
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ $data['kode_obat'] }}</td>
+                        @for($i = 0; $i < sizeof($listKriteria); $i++)
+                            <th scope="col">{{ $data["cost"][$i] }}</th>
+                            <th scope="col">{{ $data["benefit"][$i] }}</th>
+                        @endfor
                         <td>{{ $data['nilai_akhir'] }}</td>
                     </tr>
                 @endforeach

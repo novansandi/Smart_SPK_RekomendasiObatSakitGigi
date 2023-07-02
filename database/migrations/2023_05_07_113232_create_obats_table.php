@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('obats', function (Blueprint $table) {
             $table->id();
             $table->string('kode_obat', 10);
-            $table->integer('ranking')->nullable()->default(null);
             $table->float('nilai_akhir')->nullable()->default(0);
             $table->boolean('is_deleted')->default(false);
             $table->timestamps();

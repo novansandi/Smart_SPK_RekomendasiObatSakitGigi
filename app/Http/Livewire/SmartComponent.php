@@ -11,6 +11,7 @@ use Livewire\Component;
 class SmartComponent extends Component
 {
     public $listObat = [];
+    public $listKriteria;
 
     //paggination
     public $page = 1, $limit = 20, $maxPage = 0;
@@ -42,7 +43,7 @@ class SmartComponent extends Component
         }
         $data = Obat::where('is_deleted', '=', false)->get()->toArray();
         foreach ($data as &$obat) {
-            $detail = DetailObat::select('subkriterias.nilai_subkriteria')
+            $detail = DetailObat::select('detail_obats.id','subkriterias.nilai_subkriteria', 'detail_obats.cost', 'detail_obats.benefit')
                 ->where('detail_obats.obat_id', '=', $obat['id'])
                 ->join('kriterias', 'kriterias.id', '=', 'detail_obats.kriteria_id')
                 ->join('subkriterias', 'subkriterias.id', '=', 'detail_obats.subkriteria_id', 'left outer')
@@ -51,8 +52,15 @@ class SmartComponent extends Component
             $obat["matrix"] = array_column($detail, 'nilai_subkriteria');
             $obat["nilai_akhir"] = 0;
             foreach ($listKriteria as $index => &$kriteria) {
-                $obat["matrix"][$index] = ($obat["matrix"][$index] - $kriteria["min_sub"]) * $kriteria['normalisasi_bobot'] / ($kriteria["max_sub"] - $kriteria['min_sub']);
+                $detail[$index]["cost"] = ($kriteria["max_sub"] - $obat["matrix"][$index]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
+                $detail[$index]["benefit"] = ($obat["matrix"][$index] - $kriteria["min_sub"]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
+                $obat["matrix"][$index] = $detail[$index]["benefit"] * ( $kriteria["normalisasi_bobot"]);
                 $obat["nilai_akhir"] += $obat["matrix"][$index];
+                DetailObat::where("id", '=', $detail[$index]["id"])
+                    ->update([
+                        "cost" => $detail[$index]["cost"],
+                        "benefit" => $detail[$index]["benefit"]
+                    ]);
             }
             Obat::where('id', '=', $obat["id"])
                 ->update([
@@ -66,11 +74,20 @@ class SmartComponent extends Component
         $query = Obat::where('is_deleted', '=', false);
 
         $this->maxPage = ceil($query->count() / $this->limit);
+        $this->listKriteria = Kriteria::orderBy("id")->get()->toArray();
         $this->listObat = $query->orderBy('nilai_akhir', 'desc')
             ->orderBy('id', 'asc')
             ->skip(($this->page - 1) * $this->limit)
             ->limit($this->limit)
             ->get()->toArray();
+
+        foreach($this->listObat as &$obat){
+            $detail = DetailObat::where("obat_id", $obat["id"])
+                ->orderBy("kriteria_id", 'asc')
+                ->get()->toArray();
+            $obat["cost"] = array_column($detail, "cost");
+            $obat["benefit"] = array_column($detail, "benefit");
+        }
     }
 
     public function toPage($page)

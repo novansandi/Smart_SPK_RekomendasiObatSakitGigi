@@ -50,6 +50,7 @@ class ObatComponent extends Component
         $this->selected = $this->listObat[$index];
         $this->subkriteria_id = $this->selected["subkriteria_id"];
         $this->mode = 'edit';
+        $this->kode_obat = $this->selected["kode_obat"];
     }
 
     public function delete($index)

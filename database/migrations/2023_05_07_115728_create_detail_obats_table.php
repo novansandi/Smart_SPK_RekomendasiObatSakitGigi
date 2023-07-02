@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('obat_id');
             $table->unsignedBigInteger('kriteria_id');
             $table->unsignedBigInteger('subkriteria_id');
+            $table->float("cost")->default(0);
+            $table->float('benefit')->default(0);
             $table->timestamps();
             $table->index('kriteria_id');
             $table->foreign('kriteria_id')->references('id')->on('kriterias')->onDelete('cascade');

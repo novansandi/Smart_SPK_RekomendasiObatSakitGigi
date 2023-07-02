@@ -22,8 +22,8 @@
                 @foreach ($listObat as $index => $data)
                     <tr class="text-center">
                         <th scope="row">{{ $data['kode_obat'] }}</th>
-                        @foreach ($listKriteria as $index => $kriteria)
-                            <td scope="col">{{ $data['nama_subkriteria'][$index] }}</td>
+                        @foreach ($listKriteria as $index2 => $kriteria)
+                            <td scope="col">{{ $data['nama_subkriteria'][$index2] }}</td>
                         @endforeach
                         <td class="d-flex justify-content-end">
                             <button type="button" class="btn btn-warning" style="margin-right: 15px"
@@ -107,7 +107,7 @@
                         wire:click="emptyForm()"></button>
                 </div>
                 <div class="modal-body">
-                    Hapus data Subkriteria {{ $selected['nama_subkriteria'] ?? '' }}
+                    Hapus data Subkriteria {{ $selected['kode_obat'] ?? '' }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
