@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class KriteriaComponent extends Component
 {
-    public $kode, $nama, $bobot;
+    public $kode, $nama, $bobot, $type;
     public $listKriteria;
     public $search;
 
@@ -43,6 +43,7 @@ class KriteriaComponent extends Component
         $this->nama = $this->selected["nama_kriteria"];
         $this->kode = $this->selected["kode_kriteria"];
         $this->bobot = $this->selected["bobot"];
+        $this->type = $this->selected["type"];
         $this->mode = 'edit';
     }
 
@@ -79,6 +80,7 @@ class KriteriaComponent extends Component
                         'kode_kriteria' => $this->kode,
                         'nama_kriteria' => $this->nama,
                         'bobot' => $this->bobot,
+                        "type" => $this->type,
                     ]);
 
                     if (!$kriteria) {
@@ -93,6 +95,7 @@ class KriteriaComponent extends Component
                             'kode_kriteria' => $this->kode,
                             'nama_kriteria' => $this->nama,
                             'bobot' => $this->bobot,
+                            "type" => $this->type,
                         ]);
                     if (!$kriteria) {
                         $this->errorMessage = 'gagal mengubah data kriteria!';

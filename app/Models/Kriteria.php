@@ -9,5 +9,5 @@ class Kriteria extends Model
 {
     use HasFactory;
 
-    public $fillable = ['kode_kriteria', 'nama_kriteria', 'bobot'];
+    public $fillable = ['kode_kriteria', 'nama_kriteria', 'bobot', 'type'];
 }

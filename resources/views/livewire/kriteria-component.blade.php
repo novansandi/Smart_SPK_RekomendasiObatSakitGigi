@@ -13,6 +13,7 @@
                 <tr class="text-center">
                     <th scope="col">Kode</th>
                     <th scope="col">Kriteria</th>
+                    <th scope="col">Tipe</th>
                     <th scope="col">Bobot</th>
                     <th scope="col">Normalisasi Bobot</th>
                     <th scope="col"></th>
@@ -23,6 +24,7 @@
                     <tr class="text-center">
                         <th scope="row">{{ $kriteria['kode_kriteria'] }}</th>
                         <td>{{ $kriteria['nama_kriteria'] }}</td>
+                        <td>{{ $kriteria['type'] }}</td>
                         <td>{{ $kriteria['bobot'] }}</td>
                         <td>{{ $rangeBobot > 0 ? ($kriteria['bobot'] - $minBobot) / $rangeBobot : '-' }}</td>
                         <td class="d-flex justify-content-end">
@@ -41,7 +43,7 @@
             </tbody>
             <tfoot class="table-dark">
                 <tr class="text-center">
-                    <td colspan="2">
+                    <td colspan="3">
                         Jumlah
                     </td>
                     <td>{{$rangeBobot}}</td>
@@ -90,6 +92,15 @@
                             id="bobot">Bobot</button>
                         <input type="number" step="0.01" class="form-control" placeholder="bobot"
                             wire:model="bobot">
+                    </div>
+                    <div class="input-group mb-3">
+                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
+                            id="type">Type</button>
+                        <select class="form-select" id="inputGroupSelect02" wire:model="type">
+                            <option>Type ...</option>
+                                <option value="cost">Cost</option>
+                                <option value="benefit">Benefit</option>
+                        </select>
                     </div>
                 </div>
                 @if ($kode && $nama && $bobot)

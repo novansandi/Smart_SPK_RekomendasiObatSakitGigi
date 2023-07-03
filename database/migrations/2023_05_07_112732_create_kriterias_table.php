@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('bobot');
             $table->float('normalisasi_bobot')->default(0);
             $table->boolean('is_deleted')->default(false);
+            $table->string('type', 10)->default("benefit");
             $table->timestamps();
         });
     }

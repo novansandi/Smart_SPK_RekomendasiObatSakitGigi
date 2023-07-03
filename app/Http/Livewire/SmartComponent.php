@@ -54,7 +54,11 @@ class SmartComponent extends Component
             foreach ($listKriteria as $index => &$kriteria) {
                 $detail[$index]["cost"] = ($kriteria["max_sub"] - $obat["matrix"][$index]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
                 $detail[$index]["benefit"] = ($obat["matrix"][$index] - $kriteria["min_sub"]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
-                $obat["matrix"][$index] = $detail[$index]["benefit"] * ( $kriteria["normalisasi_bobot"]);
+                if ($kriteria["type"] == "benefit"){
+                    $obat["matrix"][$index] = $detail[$index]["benefit"] * ( $kriteria["normalisasi_bobot"]);
+                }else{
+                    $obat["matrix"][$index] = $detail[$index]["cost"] * ( $kriteria["normalisasi_bobot"]);
+                }
                 $obat["nilai_akhir"] += $obat["matrix"][$index];
                 DetailObat::where("id", '=', $detail[$index]["id"])
                     ->update([
