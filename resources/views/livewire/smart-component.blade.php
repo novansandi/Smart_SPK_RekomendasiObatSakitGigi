@@ -15,13 +15,14 @@
                     @foreach ($listKriteria as $kriteria)
                         <th scope="col" colspan="2">{{$kriteria["nama_kriteria"]}}</th>
                     @endforeach
-                    <th scope="col" rowspan="2" style="vertical-align: middle">Nilai Akhir</th>
+                    <th scope="col" style="vertical-align: middle">Nilai Akhir</th>
                 </tr>
                 <tr class="text-center">
                     @foreach ($listKriteria as $kriteria)
-                        <th scope="col">cost</th>
-                        <th scope="col">benefit</th>
+                        <th scope="col">Utility</th>
+                        <th scope="col">Bobot</th>
                     @endforeach
+                    <th>∑(Utility x Bobot)</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,10 +31,10 @@
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ $data['kode_obat'] }}</td>
                         @for($i = 0; $i < sizeof($listKriteria); $i++)
-                            <th scope="col">{{ $data["cost"][$i] }}</th>
-                            <th scope="col">{{ $data["benefit"][$i] }}</th>
+                            <th scope="col">{{ $listKriteria[$i]["type"] == "cost" ? $data["cost"][$i] : $data["benefit"][$i] }}</th>
+                            <th scope="col">{{ number_format($listKriteria[$i]["normalisasi_bobot"], 2) }}</th>
                         @endfor
-                        <td>{{ $data['nilai_akhir'] }}</td>
+                        <td>{{ number_format($data['nilai_akhir'], 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>

@@ -22,13 +22,13 @@
     <script>
         const nav = document.getElementsByClassName('nv')
         switch ('{{ getCurrentSection() }}') {
-            case 'dashboard':
+            case 'dashboard': case "":
                 nav[0].classList.add('active');
                 break;
-            case 'kriteria':
+            case 'kriteria': case "rekom-obat":
                 nav[1].classList.add('active');
                 break;
-            case 'subkriteria':
+            case 'subkriteria': case "perhitungan-dosis":
                 nav[2].classList.add('active');
                 break;
             case 'obat':
