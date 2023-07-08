@@ -52,8 +52,8 @@ class SmartComponent extends Component
             $obat["matrix"] = array_column($detail, 'nilai_subkriteria');
             $obat["nilai_akhir"] = 0;
             foreach ($listKriteria as $index => &$kriteria) {
-                $detail[$index]["cost"] = ($kriteria["max_sub"] - $obat["matrix"][$index]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
-                $detail[$index]["benefit"] = ($obat["matrix"][$index] - $kriteria["min_sub"]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
+                $detail[$index]["cost"] =  ($obat["matrix"][$index] - $kriteria["min_sub"]) / ($kriteria["max_sub"] - $kriteria["min_sub"]);
+                $detail[$index]["benefit"] = ($kriteria["max_sub"] - $obat["matrix"][$index])/ ($kriteria["max_sub"] - $kriteria["min_sub"]);
                 if ($kriteria["type"] == "benefit") {
                     $obat["matrix"][$index] = $detail[$index]["benefit"] * ($kriteria["normalisasi_bobot"]);
                 } else {
