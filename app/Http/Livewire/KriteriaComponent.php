@@ -127,17 +127,6 @@ class KriteriaComponent extends Component
 
     public function updateMinMax()
     {
-        // $max = Kriteria::where('is_deleted', '=', false)->orderBy('bobot', 'desc')
-        //     ->limit(1)
-        //     ->get();
-        // if ($max) $this->maxBobot = $max[0]->bobot;
-
-        // $min = Kriteria::where('is_deleted', '=', false)->orderBy('bobot', 'asc')
-        //     ->limit(1)
-        //     ->get();
-        // if ($min) $this->minBobot = $min[0]->bobot;
-
-        // $this->rangeBobot = $this->maxBobot - $this->minBobot;
 
         $sumBobot = Kriteria::selectRaw('sum(bobot) as sum')
             ->where('is_deleted', '=', false)

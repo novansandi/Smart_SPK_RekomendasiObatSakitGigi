@@ -11,7 +11,8 @@
         <table class="table mt-4">
             <thead class="table-dark">
                 <tr class="text-center">
-                    <th scope="col">Kode Obat</th>
+                    <th scope="col">Nama Obat</th>
+                    <th scope="col">Dosis Dewasa</th>
                     @foreach ($listKriteria as $kriteria)
                         <th scope="col">{{ $kriteria['nama_kriteria'] }}</th>
                     @endforeach
@@ -22,8 +23,11 @@
                 @foreach ($listObat as $index => $data)
                     <tr class="text-center">
                         <th scope="row">{{ $data['kode_obat'] }}</th>
+                        <th scope="row">{{ $data['dosis_dewasa'] }}</th>
                         @foreach ($listKriteria as $index2 => $kriteria)
-                            <td scope="col">{{ $data['nama_subkriteria'][$index2] }}</td>
+                            <td scope="col">
+                                {{ $data['nama_subkriteria'][$index2] }}
+                            </td>
                         @endforeach
                         <td class="d-flex justify-content-end">
                             <button type="button" class="btn btn-warning" style="margin-right: 15px"
@@ -73,6 +77,11 @@
                             id="nama_kriteria">Kode Obat</button>
                         <input type="text" class="form-control" placeholder="Kode Obat" wire:model="kode_obat">
                     </div>
+                    <div class="input-group mb-3">
+                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
+                            id="dosis_dewasa">Dosis Dewasa</button>
+                        <input type="text" class="form-control" placeholder="Dosis Dewasa" wire:model="dosis_dewasa">
+                    </div>
                     @foreach ($listKriteria as $index => $kriteria)
                         <div class="input-group mb-3">
                             <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
@@ -80,7 +89,11 @@
                             <select class="form-select" id="inputGroupSelect02" wire:model="subkriteria_id.{{$index}}">
                                 <option>Pilih Subkriteria ...</option>
                                 @foreach ($kriteria['list_subkriteria'] as $data)
-                                    <option value="{{ $data['id'] }}">{{ $data['nama_subkriteria'] }}</option>
+                                    <option value="{{ $data['id'] }}" 
+                                     >
+                                        {{ $data['nama_subkriteria'] }} 
+                                    </option>
+                                
                                 @endforeach
                             </select>
                         </div>
@@ -97,6 +110,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="kriteriaModalDelete" tabindex="-1" aria-labelledby="kriteriaModalDelete"
         aria-hidden="true" wire:ignore.self data-bs-backdrop="static">
         <div class="modal-dialog modal-md">

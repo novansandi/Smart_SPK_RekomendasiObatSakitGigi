@@ -12,6 +12,8 @@ class DetailObat extends Model
     public $fillable = [
         'obat_id',
         'kriteria_id',
-        'subkriteria_id'
+        'subkriteria_id',
+        'cost',
+        'benefit'
     ];
 }

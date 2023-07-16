@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class ObatComponent extends Component
 {
-    public $kode_obat, $subkriteria_id;
+    public $kode_obat,$dosis_dewasa = 0, $subkriteria_id;
     public $listObat = [];
     public $listKriteria;
     public $search;
@@ -51,6 +51,8 @@ class ObatComponent extends Component
         $this->subkriteria_id = $this->selected["subkriteria_id"];
         $this->mode = 'edit';
         $this->kode_obat = $this->selected["kode_obat"];
+        $this->dosis_dewasa = $this->selected["dosis_dewasa"];
+        //dd($this->selected);
     }
 
     public function delete($index)
@@ -79,15 +81,38 @@ class ObatComponent extends Component
         switch ($this->mode) {
             case "save": {
                     $obat = Obat::create([
-                        'kode_obat' => $this->kode_obat
+                        'kode_obat' => $this->kode_obat,
+                        'dosis_dewasa'=>$this->dosis_dewasa
                     ]);
                     if ($obat) {
                         foreach ($this->listKriteria as $index => $kriteria) {
-                            $detail = DetailObat::create([
-                                'obat_id' => $obat->id,
-                                'kriteria_id' => $kriteria['id'],
-                                'subkriteria_id' => $this->subkriteria_id[$index]
-                            ]);
+                            $kriteriaData = Kriteria::where('id',$kriteria['id'])->first();
+                            $subkriteriaData = Subkriteria::where('id',$this->subkriteria_id[$index])->first();
+                            if($kriteriaData)
+                            {
+                                if($subkriteriaData)
+                                {
+                                    if($kriteriaData->type == 'benefit')
+                                    {
+                                        $detail = DetailObat::create([
+                                            'obat_id' => $obat->id,
+                                            'kriteria_id' => $kriteria['id'],
+                                            'subkriteria_id' => $this->subkriteria_id[$index],
+                                            'benefit'=>$subkriteriaData->nilai_subkriteria,
+                                            'cost'=>0
+                                        ]);
+                                    }else
+                                    {
+                                        $detail = DetailObat::create([
+                                            'obat_id' => $obat->id,
+                                            'kriteria_id' => $kriteria['id'],
+                                            'subkriteria_id' => $this->subkriteria_id[$index],
+                                            'benefit'=>0,
+                                            'cost'=>$subkriteriaData->nilai_subkriteria
+                                        ]);
+                                    }
+                                }
+                            }
                         }
                     } else {
                         $this->errorMessage = 'gagal menambahkan data obat';
@@ -98,15 +123,38 @@ class ObatComponent extends Component
             case "edit": {
                     $obat = Obat::where('id', $this->selected['id'])
                         ->update([
-                            'kode_obat' => $this->kode_obat
+                            'kode_obat' => $this->kode_obat,
+                            'dosis_dewasa'=>$this->dosis_dewasa
                         ]);
                     if ($obat) {
                         foreach ($this->listKriteria as $index => $kriteria) {
-                            $detail = DetailObat::where('obat_id', '=', $this->selected['id'])
-                                ->where('kriteria_id', '=', $kriteria['id'])
-                                ->update([
-                                    'subkriteria_id' => $this->subkriteria_id[$index]
-                                ]);
+                            $kriteriaData = Kriteria::where('id',$kriteria['id'])->first();
+                            $subkriteriaData = Subkriteria::where('id',$this->subkriteria_id[$index])->first();
+                            if($kriteriaData)
+                            {
+                                if($subkriteriaData)
+                                {
+                                    if($kriteriaData->type == 'benefit')
+                                    {
+                                        $detail = DetailObat::where('obat_id', '=', $this->selected['id'])
+                                        ->where('kriteria_id', '=', $kriteria['id'])
+                                        ->update([
+                                            'subkriteria_id' => $this->subkriteria_id[$index],
+                                            'cost'=>0,
+                                            'benefit'=>$subkriteriaData->nilai_subkriteria
+                                        ]);
+                                    }else // cost
+                                    {
+                                        $detail = DetailObat::where('obat_id', '=', $this->selected['id'])
+                                        ->where('kriteria_id', '=', $kriteria['id'])
+                                        ->update([
+                                            'subkriteria_id' => $this->subkriteria_id[$index],
+                                            'cost'=>$subkriteriaData->nilai_subkriteria,
+                                            'benefit'=>0
+                                        ]);
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
@@ -125,7 +173,7 @@ class ObatComponent extends Component
             ->get()->toArray();
 
         foreach ($this->listObat as &$obat) {
-            $detail = DetailObat::select('subkriteria_id', 'subkriterias.nama_subkriteria')
+            $detail = DetailObat::select('subkriteria_id', 'subkriterias.nama_subkriteria','detail_obats.cost','detail_obats.benefit')
                 ->join('kriterias', 'kriterias.id', '=', 'detail_obats.kriteria_id')
                 ->join('subkriterias', 'subkriterias.id', '=', 'detail_obats.subkriteria_id', 'left outer')
                 ->where('kriterias.is_deleted', '=', false)
@@ -134,9 +182,17 @@ class ObatComponent extends Component
                 ->get()->toArray();
             $obat["subkriteria_id"] = [];
             $obat["nama_subkriteria"] = [];
+            $obat["value"] = [];
             foreach($detail as $index => $data){
                 array_push($obat["subkriteria_id"], $data['subkriteria_id']);
                 array_push($obat["nama_subkriteria"], $data["nama_subkriteria"]);
+                if($data['cost'] == 0)
+                {
+                    array_push($obat["value"], $data["benefit"]);
+                }else
+                {
+                    array_push($obat["value"], $data["cost"]);
+                }
             }
         }
     }

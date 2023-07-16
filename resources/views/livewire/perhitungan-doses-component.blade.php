@@ -29,5 +29,27 @@
         @else
             Masukkan usia anda untuk mendapatkan perhitungan dosis!
         @endif
+        @if(count($data)>0)
+          <div class="table-responsive">
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Obat</th>
+                        <th>Dosis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data as $key => $item)
+                    <tr>
+                        <td>{{$key+1}}</td>
+                        <td>{{$item['kode_obat']}}</td>
+                        <td>{{$item['dosis']}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endif
     </div>
 </div>

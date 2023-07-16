@@ -31,10 +31,10 @@
                         <th scope="row">{{ $index + 1 }}</th>
                         <td>{{ $data['kode_obat'] }}</td>
                         @for($i = 0; $i < sizeof($listKriteria); $i++)
-                            <th scope="col">{{ $listKriteria[$i]["type"] == "cost" ? $data["cost"][$i] : $data["benefit"][$i] }}</th>
-                            <th scope="col">{{ number_format($listKriteria[$i]["normalisasi_bobot"], 2) }}</th>
+                            <th scope="col">{{$arrData[$data['id']][$listKriteria[$i]['id']]}}</th>
+                            <th scope="col">{{$listKriteria[$i]['bobot']}}</th>
                         @endfor
-                        <td>{{ number_format($data['nilai_akhir'], 2) }}</td>
+                        <td>{{$data['nilai_akhir'] }}</td>
                     </tr>
                 @endforeach
             </tbody>
