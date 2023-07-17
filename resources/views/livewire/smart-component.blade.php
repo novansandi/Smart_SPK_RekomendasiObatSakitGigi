@@ -32,7 +32,7 @@
                         <td>{{ $data['kode_obat'] }}</td>
                         @for($i = 0; $i < sizeof($listKriteria); $i++)
                             <th scope="col">{{$arrData[$data['id']][$listKriteria[$i]['id']]}}</th>
-                            <th scope="col">{{$listKriteria[$i]['bobot']}}</th>
+                            <th scope="col">{{$listKriteria[$i]['bobot'] / 100}}</th>
                         @endfor
                         <td>{{$data['nilai_akhir'] }}</td>
                     </tr>

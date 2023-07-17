@@ -106,7 +106,7 @@ class SmartComponent extends Component
                 $kriteriaBobotMaster = DB::table('kriterias')->where('id',$i)->first();
                 if($kriteriaBobotMaster)
                 {
-                    $arrData[$key][$i] = $item * $kriteriaBobotMaster->bobot;
+                    $arrData[$key][$i] = $item * ($kriteriaBobotMaster->bobot / 100);
                 }
             }
         }
