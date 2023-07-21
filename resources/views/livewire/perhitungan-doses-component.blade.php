@@ -44,7 +44,7 @@
                     <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$item['kode_obat']}}</td>
-                        <td>{{$item['dosis']}}</td>
+                        <td>{{$item['dosis']}} mg</td>
                     </tr>
                     @endforeach
                 </tbody>

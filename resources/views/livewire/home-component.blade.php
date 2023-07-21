@@ -1,21 +1,179 @@
-<div>
-    <div class="d-flex justify-content-center">
-        <div class="card mb-3" style="max-width: 100%;">
-            <div class="row no-gutters">
-                <div class="col-md-5 d-flex justify-content-center flex-column">
-                    <img src="https://mhomecare.co.id/blog/wp-content/uploads/2020/09/10-Obat-Maag-Paling-Ampuh-di-Apotek.jpg" alt="..." class="container-fluid">
-                </div>
-                <div class="col-md-7">
-                    <div class="card-body">
-                        <h5 class="card-title">Apa itu Obat?</h5>
-                        <p class="card-text">Menurut pengertiannya, obat merupakan suatu benda atau zat yang dapat digunakan untuk merawat atau menyembuhkan penyakit, membebaskan seseorang dari gejala penyakit atau mengubah proses kimia di dalam tubuh. Dijabarkan lebih luas bahwa obat adalah suatu bahan atau paduan bahan-bahan yang dimaksudkan untuk menetapkan diagonis, mencegah, mengurangi, menyembuhkan, menghilangkan penyakit atau gejala penyakit, luka dan kelainan, entah itu yang bersifat fisik maupun psikis.
-
-                            Pengertian lain dari obat menurut Kamus Besar Bahasa Indonesia adalah suatu bahan yang dapat mengurangi, menghilangkan penyakit, atau menyembuhkan seseorang dari penyakit. Yang dapat berupa bahan kimia atau sebagainya. Nah, dari pengertian diatas dapat disimpulkan bahwa sesuatu yang dapat membantu manusia tetap sehat dan terhindar dari penyakit adalah obat.
-
-                            Obat tidak hanya berfungsi sebagai bahan yang digunakan apabila manusia terserang penyakit. Tetapi, nama lain dari obat dapat digunakan sebagai bahan memperindah, atau mempercantik tampilan pemakainya. Membentuk badan dan menjaga tubuh tetap berada dalam bentuk paling idealnya.</p>
+    <div>
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header" id="home">
+        <div class="container py-5">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5" style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To Sistem Rekom Obat</h5>
+                    <h1 class="display-1 text-white mb-md-4">Sistem Informasi Rekomendasi Obat Sakit Gigi</h1>
+                    <div class="pt-2">
+                        <a href="#rekomendasi" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Rekomendasi Obat</a>
+                        <a href="#hitungdosis" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hitung Dosis Anda</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- Hero End -->
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5" id="tentang">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded" src="img/sakit.webp" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="mb-4">
+                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Tentang Sistem</h5>
+                        <h1 class="display-4">Sistem Rekomendasi Obat Sakit Gigi</h1>
+                    </div>
+                    <p>Sistem rekomendasi obat sakit gigi adalah sebuah solusi inovatif yang didesain untuk membantu para pasien dalam mengatasi keluhan sakit gigi dengan cepat dan efektif. Dengan memanfaatkan teknologi canggih berbasis kecerdasan buatan, sistem ini mampu menganalisis gejala dan tingkat keparahan sakit gigi yang dialami oleh pengguna melalui interaksi yang mudah dan intuitif.</p>
+
+                    <p>Melalui pendekatan berbasis data medis dan riwayat kesehatan pengguna, sistem rekomendasi obat sakit gigi akan memberikan saran obat-obatan yang paling sesuai dengan kondisi kesehatan dan riwayat alergi masing-masing pengguna. Pengguna juga dapat mengungkapkan preferensi pribadi, seperti memilih obat herbal atau sintetis, sehingga rekomendasi yang diberikan dapat lebih disesuaikan dengan kebutuhan individual.</p>
+
+                    <p>Sistem ini tidak hanya memberikan rekomendasi obat, tetapi juga memberikan informasi lengkap mengenai dosis yang dianjurkan, interaksi obat, dan peringatan potensial terkait efek samping. Dengan demikian, pengguna dapat merasa lebih percaya diri dan aman dalam mengambil keputusan terkait perawatan kesehatan gigi mereka.</p>
+
+                    <p>Dengan dukungan teknologi mutakhir dan basis data yang terus diperbarui, sistem rekomendasi obat sakit gigi berfungsi sebagai mitra kesehatan yang handal bagi para pasien, membantu mereka meredakan rasa sakit dan kembali menikmati kualitas hidup yang optimal</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    
+
+    <!-- Search Start -->
+    <div class="container-fluid bg-primary py-5" id="rekomendasi">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+                <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Hitung Dosis Anda</h5>
+                @if ($usiaPerhitungan && $dosis > 0)
+                    <h5 class="text-white fw-normal">Perhitungan ini hanya untuk umur > 8 Tahun</h5>
+                @else
+                    <h5 class="text-white fw-normal">Masukkan usia anda untuk mendapatkan perhitungan dosis!</h5>
+                @endif
+            </div>
+            <div class="mx-auto" style="width: 100%; max-width: 600px;">
+                <div class="input-group">
+                    <input type="number" wire:model="usia" class="form-control border-primary w-50" placeholder="Masukkan Umur Anda">
+                    <button class="btn btn-dark border-0 w-25" wire:click="hitungDosis()">
+                        Hitung <i class="fa fa-calculator"></i>
+                    </button>
+                </div>
+            </div>
+            @if ($errMessage)
+            <div class="alert alert-danger" role="alert">
+                {{$errMessage}}
+              </div>
+            @endif
+           
+            
+            @if(count($data)>0)
+              <div class="table-responsive" align="center">
+                 @if ($usiaPerhitungan && $dosis > 0)
+                    <p align="center" style="color:white;">
+                        Berdasarkan perhitungan {{$usiaPerhitungan > 8 ? 'diling' : "young"}}, dosis maksimum untuk usia {{$usiaPerhitungan}} tahun adalah {{$dosis}} mg
+                    </p>
+                @endif
+                <table class="table mt-4" style="color: white;text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Obat</th>
+                            <th>Dosis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($data as $key => $item)
+                        <tr>
+                            <td>{{$key+1}}</td>
+                            <td>{{$item['kode_obat']}}</td>
+                            <td>{{$item['dosis']}} mg</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
+        </div>
+    </div>
+    <!-- Search End -->
+
+        <!-- Search Start -->
+
+    <div class="container-fluid  py-5" id="hitungdosis">
+        <div class="container py-5">
+            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+                <h5 class="d-inline-block  text-uppercase border-bottom border-5">Rekomendasi Obat</h5>
+                <h5 class="fw-normal">Pilih sesuai kriteria anda</h5>
+            </div>
+            <div class="mx-auto" style="width: 100%; max-width: 600px;">
+                <div class="input-group">
+                    <select class="form-control" id="inputGroupSelectbentuk" style="min-width: 150px;background-color: white;" wire:model="filter.bentuk">
+                        <option selected disabled>Pilih Bentuk</option>
+                        @foreach ($listBentuk as $bentuk)
+                            <option value="{{$bentuk["id"]}}">{{$bentuk['nama_subkriteria']}}</option>
+                        @endforeach
+                    </select>
+                    <select class="form-control" id="inputGroupSelectharga" style="min-width: 150px;background-color: white;" wire:model="filter.harga">
+                        <option selected disabled>Pilih Harga</option>
+                        @foreach ($listHarga as $harga)
+                            <option value="{{$harga["id"]}}">{{$harga["nama_subkriteria"]}}</option>
+                        @endforeach
+                    </select>
+                    <select class="form-control" id="inputGroupSelectusia" style="min-width: 150px;background-color: white;" wire:model="filter.usia">
+                        <option selected disabled>Pilih Usia</option>
+                        @foreach ($listUsia as $usia)
+                            <option value="{{$usia["id"]}}">{{$usia["nama_subkriteria"]}}</option>
+                        @endforeach
+                    </select>
+                    <button class="btn btn-dark border-0 w-25" wire:click="rekom()">Temukan <i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            @if(count($listObat) > 0)
+            <div class="table-responsive">
+                <table class="table mt-4">
+                    <thead class="table-dark">
+                        <tr class="text-center">
+                            <th style="max-width: 10px;">No</th>
+                            <th scope="col">Kode Obat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($listObat as $index => $data)
+                            <tr class="text-center">
+                                <th>{{$index + 1}}</th>
+                                <th scope="row">{{ $data['kode_obat'] }}</th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+    </div>
+    <!-- Search End -->
+    </div>
+
+    <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0">{{date('Y')}} &copy; <a class="text-primary" href="#">{{ config('app.name') }}</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by <a class="text-primary" href="{{url('/')}}"></a>{{ config('app.name') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+
+
+
