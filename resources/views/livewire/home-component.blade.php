@@ -7,8 +7,8 @@
                     <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5" style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To Sistem Rekom Obat</h5>
                     <h1 class="display-1 text-white mb-md-4">Sistem Informasi Rekomendasi Obat Sakit Gigi</h1>
                     <div class="pt-2">
-                        <a href="#rekomendasi" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Rekomendasi Obat</a>
-                        <a href="#hitungdosis" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hitung Dosis Anda</a>
+                        <a href="#hitungdosis" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Rekomendasi Obat</a>
+                        <a href="#rekomendasi" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hitung Dosis Anda</a>
                     </div>
                 </div>
             </div>

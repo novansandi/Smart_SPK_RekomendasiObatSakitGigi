@@ -16,8 +16,8 @@
                     <div class="navbar-nav ms-auto py-0">
                         <a href="#home" class="nav-item nav-link ">Home</a>
                         <a href="#tentang" class="nav-item nav-link ">Tentang</a>
-                        <a href="#rekomendasi" class="nav-item nav-link">Rekomendasi Obat</a>
-                        <a href="#hitungdosis" class="nav-item nav-link">Hitung Dosis</a>
+                        <a href="#hitungdosis" class="nav-item nav-link">Rekomendasi Obat</a>
+                        <a href="#rekomendasi" class="nav-item nav-link">Hitung Dosis</a>
                         <a href="{{url('login')}}" class="nav-item nav-link">Login</a>
                     </div>
                 </div>
