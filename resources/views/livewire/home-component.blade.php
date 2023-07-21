@@ -31,9 +31,9 @@
                         <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Tentang Sistem</h5>
                         <h1 class="display-4">Sistem Rekomendasi Obat Sakit Gigi</h1>
                     </div>
-                    <p>Sistem rekomendasi obat sakit gigi adalah sebuah solusi inovatif yang didesain untuk membantu para pasien dalam mengatasi keluhan sakit gigi dengan cepat dan efektif. Dengan memanfaatkan teknologi canggih berbasis kecerdasan buatan, sistem ini mampu menganalisis gejala dan tingkat keparahan sakit gigi yang dialami oleh pengguna melalui interaksi yang mudah dan intuitif.</p>
+                    <p>Sistem rekomendasi obat sakit gigi adalah sebuah solusi inovatif yang didesain untuk membantu masyarakat dalam mengatasi keluhan sakit gigi dengan cepat dan efektif. Dengan memanfaatkan teknologi canggih berbasis kecerdasan buatan.</p>
 
-                    <p>Melalui pendekatan berbasis data medis dan riwayat kesehatan pengguna, sistem rekomendasi obat sakit gigi akan memberikan saran obat-obatan yang paling sesuai dengan kondisi kesehatan dan riwayat alergi masing-masing pengguna. Pengguna juga dapat mengungkapkan preferensi pribadi, seperti memilih obat herbal atau sintetis, sehingga rekomendasi yang diberikan dapat lebih disesuaikan dengan kebutuhan individual.</p>
+                    <p>Sistem rekomendasi obat sakit gigi akan memberikan saran obat-obatan yang paling sesuai dengan kebutuhan pengguna. Pengguna juga dapat mengungkapkan preferensi pribadi, seperti memilih obat kaplet, tablet, kapsul atau cair, sehingga rekomendasi yang diberikan dapat lebih disesuaikan dengan kebutuhan individual.</p>
 
                     <p>Sistem ini tidak hanya memberikan rekomendasi obat, tetapi juga memberikan informasi lengkap mengenai dosis yang dianjurkan, interaksi obat, dan peringatan potensial terkait efek samping. Dengan demikian, pengguna dapat merasa lebih percaya diri dan aman dalam mengambil keputusan terkait perawatan kesehatan gigi mereka.</p>
 
