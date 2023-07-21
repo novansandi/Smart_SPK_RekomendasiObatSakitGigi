@@ -21,9 +21,9 @@ class HomeComponent extends Component
     public $usiaId = 0;
 
     public $filter = [
-        "bentuk" => "",
-        "harga" => "",
-        "usia" => ""
+        "bentuk" => 14,
+        "harga" => 10,
+        "usia" => 18
     ];
 
     public $listObat = [];
