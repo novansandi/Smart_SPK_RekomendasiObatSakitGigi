@@ -1,122 +1,196 @@
-<div>
-    @section('sectionName', 'Subkriteria')
-    <div class="d-flex justify-content-end mt-2">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#kriteriaModal"
-            wire:click="create()">
-            Tambah Data
-        </button>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table mt-4">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th scope="col">Kriteria</th>
-                    <th scope="col">Subkriteria</th>
-                    <th scope="col">Nilai</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($listSubkriteria as $index => $kriteria)
-                    <tr class="text-center">
-                        <th scope="row">{{ $kriteria['nama_kriteria'] }}</th>
-                        <td>{{ $kriteria['nama_subkriteria'] }}</td>
-                        <td>{{ $kriteria['nilai_subkriteria'] }}</td>
-                        <td class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-warning" style="margin-right: 15px"
-                                data-bs-toggle="modal" data-bs-target="#kriteriaModal"
-                                wire:click="edit({{ $index }})">
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#kriteriaModalDelete" wire:click="delete({{ $index }})">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <div class="d-flex justify-content-end mt-3">
-        <nav aria-label="Page navigation example" style="cursor: pointer;">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link text-dark"
-                        wire:click="toPage({{ $page - 1 }})">Previous</a></li>
-                @for ($i = 1; $i <= $maxPage; $i++)
-                    <li class="page-item"><a class="page-link {{ $page == $i ? 'bg-dark text-light' : '' }}"
-                            wire:click="toPage({{ $i }})">{{ $i }}</a></li>
-                @endfor
-                <li class="page-item"><a class="page-link text-dark" wire:click="toPage({{ $page + 1 }})">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
-    <div class="modal fade" id="kriteriaModal" tabindex="-1" aria-labelledby="kriteriaModal" aria-hidden="true"
-        wire:ignore.self data-bs-backdrop="static">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ $mode == 'save' ? 'Tambah' : 'Edit' }} Data
-                        Subkriteria</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click="emptyForm()"></button>
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>SubKriteria</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">SubKriteria</a></li>
+              <li class="breadcrumb-item active">List</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-6 pt-2">
+                        <h3 class="card-title">List Data SubKriteria</h3>
+                    </div>
+                    <div class="col-sm-6" align="right">
+                        <a data-toggle="modal" data-target="#subkriteriaModal"
+                            wire:click="create()" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                            id="kode_kriteria">Kriteria</button>
-                        <select class="form-select" id="inputGroupSelect02" wire:model="kriteria_id">
-                            <option>Pilih Kriteria ...</option>
-                            @foreach ($listKriteria as $data)
-                                <option value="{{ $data['id'] }}">{{ $data['nama_kriteria'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="input-group mb-3">
-                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                            id="nama_kriteria">Nama Subkriteria</button>
-                        <input type="text" class="form-control" placeholder="Nama Kriteria" wire:model="nama_subkriteria">
-                    </div>
-                    <div class="input-group mb-3">
-                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                            id="bobot">Nilai</button>
-                        <input type="number" step="1" class="form-control" placeholder="bobot"
-                            wire:model="nilai_subkriteria">
-                    </div>
-                </div>
-                @if ($kriteria_id && $nama_subkriteria && $nilai_subkriteria)
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            wire:click="emptyForm()">Close</button>
-                        <button type="button" class="btn btn-dark" wire:click="save()"
-                            data-bs-dismiss="modal">Save</button>
+                <div class="card-body">
+                @if($message=Session::get('success'))
+                    <div class="alert alert-success" role="alert">
+                        <div class="alert-text">{{ucwords($message)}}</div>
                     </div>
                 @endif
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="example1">
+                        <thead >
+                            <tr class="text-center">
+                                <th scope="col">Kriteria</th>
+                                <th scope="col">Subkriteria</th>
+                                <th scope="col">Nilai</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($listSubkriteria as $index => $subkriteria)
+                                <tr class="text-center">
+                                    <th scope="row">{{ $subkriteria['nama_kriteria'] }}</th>
+                                    <td>{{ $subkriteria['nama_subkriteria'] }}</td>
+                                    <td>{{ $subkriteria['nilai_subkriteria'] }}</td>
+                                    <td class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-warning" style="margin-right: 15px"
+                                            data-toggle="modal" data-target="#subkriteriaModalEdit{{$subkriteria['id']}}">
+                                            Edit
+                                        </button>
+                                        <div class="modal fade" id="subkriteriaModalEdit{{$subkriteria['id']}}" tabindex="-1" aria-labelledby="subkriteriaModalEdit{{$subkriteria['id']}}" aria-hidden="true"
+                                            wire:ignore.self data-backdrop="static">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ubah Data
+                                                            SubKriteria</h5>
+                                                        <button type="button" data-dismiss="modal" aria-label="Close"
+                                                            wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                                    </div>
+                                                    <form action="{{url('subkriteria_update/'.$subkriteria['id'])}}" method="POST">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="nama_subkriteria">Nama SubKriteria</button>
+                                                                <input required type="text" name="nama_subkriteria" class="form-control" placeholder="Nama SubKriteria" value="{{$subkriteria['nama_subkriteria']}}">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="kode_subkriteria">Nilai SubKriteria</button>
+                                                                <input required type="number" step="1"  name="nilai_subkriteria" class="form-control" placeholder="Masukkan Nilai"
+                                                                    value="{{$subkriteria['nilai_subkriteria']}}">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="type">Kriteria</button>
+                                                                <select required class="form-control" id="inputGroupSelect02" name="kriteria_id" wire:model="type">
+                                                                    <option value="">Pilih ...</option>
+                                                                         @foreach ($listKriteria as $data)
+                                                                            <option value="{{ $data['id'] }}"
+                                                                            {{$subkriteria['kriteria_id'] == $data['id']?'selected':''}}>
+                                                                                {{ $data['nama_kriteria'] }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                                    >Close</button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                    >Update</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#subkriteriaModalDelete{{$subkriteria['id']}}">
+                                            Delete
+                                        </button>
+                                        <div class="modal fade" id="subkriteriaModalDelete{{$subkriteria['id']}}" tabindex="-1" 
+                                             aria-labelledby="subkriteriaModalDelete{{$subkriteria['id']}}" aria-hidden="true"
+                                            wire:ignore.self data-backdrop="static">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data SubKriteria</h5>
+                                                        <button type="button"  data-dismiss="modal" aria-label="Close"
+                                                            wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       Apakah Anda Yakin Untuk Hapus data subkriteria {{$subkriteria['nama_subkriteria']}}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <a href="{{url('subkriteria_delete/'.$subkriteria['id'])}}" class="btn btn-danger">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="modal fade" id="subkriteriaModal" tabindex="-1" aria-labelledby="subkriteriaModal" aria-hidden="true"
+                        wire:ignore.self data-backdrop="static">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data
+                                        SubKriteria</h5>
+                                    <button type="button" data-dismiss="modal" aria-label="Close"
+                                        wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                </div>
+                                <form action="{{url('subkriteria_store')}}" method="POST">
+                                    @csrf
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                            id="nama_subkriteria">Nama SubKriteria</button>
+                                        <input required type="text" name="nama_subkriteria" class="form-control" placeholder="Nama SubKriteria" >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                            id="kode_subkriteria">Nilai SubKriteria</button>
+                                        <input required type="number" step="1"  name="nilai_subkriteria" class="form-control" placeholder="Masukkan Nilai"
+                                            >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                            id="type">Kriteria</button>
+                                        <select required class="form-control" id="inputGroupSelect02" name="kriteria_id" wire:model="type">
+                                            <option value="">Pilih ...</option>
+                                                 @foreach ($listKriteria as $data)
+                                                    <option value="{{ $data['id'] }}">
+                                                        {{ $data['nama_kriteria'] }}
+                                                    </option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            >Close</button>
+                                    <button type="submit" class="btn btn-primary"
+                                            >Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="kriteriaModalDelete" tabindex="-1" aria-labelledby="kriteriaModalDelete" aria-hidden="true"
-        wire:ignore.self data-bs-backdrop="static">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Kriteria</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click="emptyForm()"></button>
-                </div>
-                <div class="modal-body">
-                    Hapus data Subkriteria {{ $selected['nama_subkriteria'] ?? '' }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="confirmDelete()"
-                        data-bs-dismiss="modal">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    </section>
 </div>

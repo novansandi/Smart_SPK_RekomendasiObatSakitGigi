@@ -140,7 +140,7 @@ class KriteriaComponent extends Component
     public function render()
     {
         return view('livewire.kriteria-component')
-            ->extends('templates.admin')
-            ->section('slot');
+            ->extends('templates.new')
+            ->section('content');
     }
 }

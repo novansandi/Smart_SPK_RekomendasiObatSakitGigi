@@ -207,7 +207,7 @@ class ObatComponent extends Component
     {
         $this->updateViewData();
         return view('livewire.obat-component')
-            ->extends('templates.admin')
-            ->section('slot');
+            ->extends('templates.new')
+            ->section('content');
     }
 }

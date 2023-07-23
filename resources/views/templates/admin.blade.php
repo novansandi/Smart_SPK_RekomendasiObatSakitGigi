@@ -26,6 +26,15 @@
                     <li class="nav-item">
                         <a class="nav-link nv" href="/smart">Perhitungan SMART</a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link nv" style="cursor: pointer;" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" class="d-none">
+                            @csrf
+                        </form>
+                    </li>
                 </ul>
             </div>
 

@@ -10,6 +10,9 @@ use App\Http\Livewire\RekomendasiObatComponent;
 use App\Http\Livewire\SmartComponent;
 use App\Http\Livewire\SubkriteriaComponent;
 
+use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\SubKriteriaController;
+use App\Http\Controllers\ObatController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,3 +46,15 @@ Route::get("/", HomeComponent::class);
 Route::fallback(function(){
     return redirect('/login');
 });
+
+Route::post('/kriteria_store', [KriteriaController::class,'store']);
+Route::post('/kriteria_update/{id}', [KriteriaController::class,'update']);
+Route::get('/kriteria_delete/{id}', [KriteriaController::class,'delete']);
+
+Route::post('/subkriteria_store', [SubKriteriaController::class,'store']);
+Route::post('/subkriteria_update/{id}', [SubKriteriaController::class,'update']);
+Route::get('/subkriteria_delete/{id}', [SubKriteriaController::class,'delete']);
+
+Route::post('/obat_store', [ObatController::class,'store']);
+Route::post('/obat_update/{id}', [ObatController::class,'update']);
+Route::get('/obat_delete/{id}', [ObatController::class,'delete']);

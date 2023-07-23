@@ -1,134 +1,218 @@
-<div>
-    @section('sectionName', 'Data Obat')
-    <div class="d-flex justify-content-end mt-2">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#kriteriaModal"
-            wire:click="create()">
-            Tambah Data
-        </button>
-    </div>
 
-    <div class="table-responsive">
-        <table class="table mt-4">
-            <thead class="table-dark">
-                <tr class="text-center">
-                    <th scope="col">Nama Obat</th>
-                    <th scope="col">Dosis Dewasa</th>
-                    @foreach ($listKriteria as $kriteria)
-                        <th scope="col">{{ $kriteria['nama_kriteria'] }}</th>
-                    @endforeach
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($listObat as $index => $data)
-                    <tr class="text-center">
-                        <th scope="row">{{ $data['kode_obat'] }}</th>
-                        <th scope="row">{{ $data['dosis_dewasa'] }}</th>
-                        @foreach ($listKriteria as $index2 => $kriteria)
-                            <td scope="col">
-                                {{ $data['nama_subkriteria'][$index2] }}
-                            </td>
-                        @endforeach
-                        <td class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-warning" style="margin-right: 15px"
-                                data-bs-toggle="modal" data-bs-target="#kriteriaModal"
-                                wire:click="edit({{ $index }})">
-                                Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#kriteriaModalDelete" wire:click="delete({{ $index }})">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-
-    <div class="d-flex justify-content-end mt-3">
-        <nav aria-label="Page navigation example" style="cursor: pointer;">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link text-dark"
-                        wire:click="toPage({{ $page - 1 }})">Previous</a></li>
-                @for ($i = 1; $i <= $maxPage; $i++)
-                    <li class="page-item"><a class="page-link {{ $page == $i ? 'bg-dark text-light' : '' }}"
-                            wire:click="toPage({{ $i }})">{{ $i }}</a></li>
-                @endfor
-                <li class="page-item"><a class="page-link text-dark" wire:click="toPage({{ $page + 1 }})">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-
-    <div class="modal fade" id="kriteriaModal" tabindex="-1" aria-labelledby="kriteriaModal" aria-hidden="true"
-        wire:ignore.self data-bs-backdrop="static">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ $mode == 'save' ? 'Tambah' : 'Edit' }} Data
-                        Obat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click="emptyForm()"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                            id="nama_kriteria">Kode Obat</button>
-                        <input type="text" class="form-control" placeholder="Kode Obat" wire:model="kode_obat">
+<div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Obat</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Obat</a></li>
+              <li class="breadcrumb-item active">List</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-sm-6 pt-2">
+                        <h3 class="card-title">List Data Obat</h3>
                     </div>
-                    <div class="input-group mb-3">
-                        <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                            id="dosis_dewasa">Dosis Dewasa</button>
-                        <input type="text" class="form-control" placeholder="Dosis Dewasa" wire:model="dosis_dewasa">
+                    <div class="col-sm-6" align="right">
+                        <a data-toggle="modal" data-target="#obatModal"
+                            wire:click="create()" class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
                     </div>
-                    @foreach ($listKriteria as $index => $kriteria)
-                        <div class="input-group mb-3">
-                            <button style="min-width: 122px;" class="btn btn-dark" disabled type="button"
-                                id="kode_kriteria">{{$kriteria['nama_kriteria']}}</button>
-                            <select class="form-select" id="inputGroupSelect02" wire:model="subkriteria_id.{{$index}}">
-                                <option>Pilih Subkriteria ...</option>
-                                @foreach ($kriteria['list_subkriteria'] as $data)
-                                    <option value="{{ $data['id'] }}" 
-                                     >
-                                        {{ $data['nama_subkriteria'] }} 
-                                    </option>
-                                
-                                @endforeach
-                            </select>
-                        </div>
-                    @endforeach
+                  </div>
                 </div>
-                @if ($kode_obat && $subkriteria_id && sizeof($subkriteria_id) == sizeof($listKriteria))
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                            wire:click="emptyForm()">Close</button>
-                        <button type="button" class="btn btn-dark" wire:click="save()"
-                            data-bs-dismiss="modal">Save</button>
+                <div class="card-body">
+                @if($message=Session::get('success'))
+                    <div class="alert alert-success" role="alert">
+                        <div class="alert-text">{{ucwords($message)}}</div>
                     </div>
                 @endif
-            </div>
-        </div>
-    </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="example1">
+                        <thead >
+                            <tr class="text-center">
+                                <th scope="col">Nama Obat</th>
+                                <th scope="col">Dosis Dewasa</th>
+                                <th scope="col">Takaran/Hari</th>
+                                @foreach ($listKriteria as $kriteria)
+                                    <th scope="col">{{ $kriteria['nama_kriteria'] }}</th>
+                                @endforeach
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($listObat as $index => $obat)
+                                <tr class="text-center">
+                                    <th scope="row">{{ $obat['kode_obat'] }}</th>
+                                    <th scope="row">{{ $obat['dosis_dewasa'] }}</th>
+                                    <th scope="row">{{ $obat['takaran_per_hari'] }}</th>
+                                    @foreach ($listKriteria as $index2 => $kriteria)
+                                        <td scope="col">
+                                            {{ $obat['nama_subkriteria'][$index2] }}
+                                        </td>
+                                    @endforeach
+                                    <td class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-warning" style="margin-right: 15px"
+                                            data-toggle="modal" data-target="#obatModalEdit{{$obat['id']}}">
+                                            Edit
+                                        </button>
+                                        <div class="modal fade" id="obatModalEdit{{$obat['id']}}" tabindex="-1" aria-labelledby="obatModalEdit{{$obat['id']}}" aria-hidden="true"
+                                            wire:ignore.self data-backdrop="static">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ubah Data
+                                                            Obat</h5>
+                                                        <button type="button" data-dismiss="modal" aria-label="Close"
+                                                            wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                                    </div>
+                                                    <form action="{{url('obat_update/'.$obat['id'])}}" method="POST">
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="nama_obat">Kode Obat</button>
+                                                                <input required type="text" name="kode_obat" class="form-control" placeholder="Kode Obat" value="{{$obat['kode_obat']}}">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="kode_obat">Dosis Dewasa</button>
+                                                                <input required type="number" step="any"  name="dosis_dewasa" class="form-control" placeholder="15000" value="{{$obat['dosis_dewasa']}}">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                    id="kode_obat">Takaran/Hari</button>
+                                                                <input required type="number" step="any"  name="takaran_per_hari" class="form-control" placeholder="3" value="{{$obat['takaran_per_hari']}}">
+                                                            </div>
+                                                            @foreach ($listKriteria as $index => $kriteria)
+                                                                <div class="input-group mb-3">
+                                                                    <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                                        id="kode_kriteria" >{{$kriteria['nama_kriteria']}}</button>
+                                                                    <select required class="form-control" name="subkriteria_id[{{$index}}]">
+                                                                        <option value="">Pilih Subkriteria ...</option>
+                                                                        @foreach ($kriteria['list_subkriteria'] as $data)
+                                                                            <option value="{{ $data['id'] }}"
+                                                                            {{$obat['subkriteria_id'][$index] == $data['id'] ? 'selected':''}}>
+                                                                                {{ $data['nama_subkriteria'] }} 
+                                                                            </option>
+                                                                        
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                                    >Close</button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                    >Update</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#obatModalDelete{{$obat['id']}}">
+                                            Delete
+                                        </button>
+                                        <div class="modal fade" id="obatModalDelete{{$obat['id']}}" tabindex="-1" 
+                                             aria-labelledby="obatModalDelete{{$obat['id']}}" aria-hidden="true"
+                                            wire:ignore.self data-backdrop="static">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Obat</h5>
+                                                        <button type="button"  data-dismiss="modal" aria-label="Close"
+                                                            wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       Apakah Anda Yakin Untuk Hapus data obat {{$obat['kode_obat']}}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <a href="{{url('obat_delete/'.$obat['id'])}}" class="btn btn-danger">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-    <div class="modal fade" id="kriteriaModalDelete" tabindex="-1" aria-labelledby="kriteriaModalDelete"
-        aria-hidden="true" wire:ignore.self data-bs-backdrop="static">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Kriteria</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click="emptyForm()"></button>
+
+                <div class="modal fade" id="obatModal" tabindex="-1" aria-labelledby="obatModal" aria-hidden="true"
+                        wire:ignore.self data-backdrop="static">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data
+                                        Obat</h5>
+                                    <button type="button" data-dismiss="modal" aria-label="Close"
+                                        wire:click="emptyForm()"><i class="fa fa-close"></i></button>
+                                </div>
+                                <form action="{{url('obat_store')}}" method="POST">
+                                    @csrf
+                                <div class="modal-body">
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                            id="nama_obat">Kode Obat</button>
+                                        <input required type="text" name="kode_obat" class="form-control" placeholder="Kode Obat" >
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                            id="kode_obat">Dosis Dewasa</button>
+                                        <input required type="number" step="any"  name="dosis_dewasa" class="form-control" placeholder="15000">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                id="kode_obat">Takaran/Hari</button>
+                                        <input required type="number" step="any"  name="takaran_per_hari" class="form-control" placeholder="3" >
+                                    </div>
+                                    @foreach ($listKriteria as $index => $kriteria)
+                                        <div class="input-group mb-3">
+                                            <button style="min-width: 122px;" class="btn btn-primary" disabled type="button"
+                                                id="kode_kriteria" >{{$kriteria['nama_kriteria']}}</button>
+                                            <select required class="form-control" name="subkriteria_id[{{$index}}]">
+                                                <option value="">Pilih Subkriteria ...</option>
+                                                @foreach ($kriteria['list_subkriteria'] as $data)
+                                                    <option value="{{ $data['id'] }}">
+                                                        {{ $data['nama_subkriteria'] }} 
+                                                    </option>
+                                                
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            >Close</button>
+                                    <button type="submit" class="btn btn-primary"
+                                            >Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    Hapus data Subkriteria {{ $selected['kode_obat'] ?? '' }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="confirmDelete()"
-                        data-bs-dismiss="modal">Delete</button>
+
+                
+
                 </div>
             </div>
         </div>
     </div>
+    </section>
 </div>

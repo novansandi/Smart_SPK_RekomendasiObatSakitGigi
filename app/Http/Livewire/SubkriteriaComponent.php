@@ -113,7 +113,7 @@ class SubkriteriaComponent extends Component
     {
         $this->updateViewData();
         return view('livewire.subkriteria-component')
-            ->extends('templates.admin')
-            ->section('slot');
+            ->extends('templates.new')
+            ->section('content');
     }
 }
