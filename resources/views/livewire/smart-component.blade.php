@@ -37,7 +37,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th scope="col" rowspan="2" style="vertical-align: middle">Ranking</th>
-                                <th scope="col" rowspan="2" style="vertical-align: middle">Kode Obat</th>
+                                <th scope="col" rowspan="2" style="vertical-align: middle">Nama Obat</th>
                                 @foreach ($listKriteria as $kriteria)
                                     <th scope="col" colspan="2">{{$kriteria["nama_kriteria"]}}</th>
                                 @endforeach

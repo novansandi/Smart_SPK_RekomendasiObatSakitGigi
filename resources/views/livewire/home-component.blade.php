@@ -118,7 +118,7 @@
                     <thead class="table-dark">
                         <tr class="text-center">
                             <th style="max-width: 10px;">No</th>
-                            <th scope="col">Kode Obat</th>
+                            <th scope="col">Nama Obat</th>
                         </tr>
                     </thead>
                     <tbody>
