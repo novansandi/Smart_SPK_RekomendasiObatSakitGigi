@@ -149,7 +149,7 @@ class SmartComponent extends Component
         $this->smart();
         $this->updateViewData();
         return view('livewire.smart-component')
-            ->extends('templates.admin')
-            ->section('slot');
+            ->extends('templates.new')
+            ->section('content');
     }
 }
