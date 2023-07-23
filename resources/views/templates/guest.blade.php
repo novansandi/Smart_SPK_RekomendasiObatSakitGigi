@@ -17,7 +17,7 @@
                         <a href="#home" class="nav-item nav-link ">Home</a>
                         <a href="#tentang" class="nav-item nav-link ">Tentang</a>
                         <a href="#hitungdosis" class="nav-item nav-link">Rekomendasi Obat</a>
-                        <a href="#rekomendasi" class="nav-item nav-link">Hitung Dosis</a>
+                        <a href="#rekomendasi" class="nav-item nav-link">Rekomendasi Dosis</a>
                         <a href="{{url('login')}}" class="nav-item nav-link">Login</a>
                     </div>
                 </div>
