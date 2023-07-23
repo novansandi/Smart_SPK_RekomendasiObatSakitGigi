@@ -40,6 +40,7 @@
                     <table class="table table-bordered table-striped" id="example1">
                         <thead >
                             <tr class="text-center">
+                                <th scope="col">No</th>
                                 <th scope="col">Kode</th>
                                 <th scope="col">Kriteria</th>
                                 <th scope="col">Tipe</th>
@@ -51,6 +52,7 @@
                         <tbody>
                             @foreach ($listKriteria as $index => $kriteria)
                                 <tr class="text-center">
+                                    <th scope="row">{{ $index+1 }}</th>
                                     <th scope="row">{{ $kriteria['kode_kriteria'] }}</th>
                                     <td>{{ $kriteria['nama_kriteria'] }}</td>
                                     <td>{{ $kriteria['type'] }}</td>

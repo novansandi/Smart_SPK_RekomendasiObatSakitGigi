@@ -40,6 +40,7 @@
                     <table class="table table-bordered table-striped" id="example1">
                         <thead >
                             <tr class="text-center">
+                                <th scope="col">No</th>
                                 <th scope="col">Kriteria</th>
                                 <th scope="col">Subkriteria</th>
                                 <th scope="col">Nilai</th>
@@ -49,6 +50,7 @@
                         <tbody>
                             @foreach ($listSubkriteria as $index => $subkriteria)
                                 <tr class="text-center">
+                                    <th scope="row">{{ $index+1 }}</th>
                                     <th scope="row">{{ $subkriteria['nama_kriteria'] }}</th>
                                     <td>{{ $subkriteria['nama_subkriteria'] }}</td>
                                     <td>{{ $subkriteria['nilai_subkriteria'] }}</td>

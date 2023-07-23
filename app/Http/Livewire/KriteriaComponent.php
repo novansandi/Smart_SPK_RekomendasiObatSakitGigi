@@ -111,12 +111,13 @@ class KriteriaComponent extends Component
     public function updateViewData()
     {
         $this->updateMinMax();
-        $query = Kriteria::where('is_deleted', '=', false)->where('nama_kriteria', 'like', "%$this->search%");
+        // $query = Kriteria::where('is_deleted', '=', false)->where('nama_kriteria', 'like', "%$this->search%");
 
-        $this->maxPage = ceil($query->count() / $this->limit);
-        $this->listKriteria = $query->skip(($this->page - 1) * $this->limit)
-            ->limit($this->limit)
-            ->get();
+        // $this->maxPage = ceil($query->count() / $this->limit);
+        // $this->listKriteria = $query->skip(($this->page - 1) * $this->limit)
+        //     ->limit($this->limit)
+        //     ->get();
+        $this->listKriteria = Kriteria::where('is_deleted', '=', false)->orderBy("bobot", "ASC")->get();
     }
 
     public function toPage($page){

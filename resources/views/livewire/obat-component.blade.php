@@ -40,6 +40,7 @@
                     <table class="table table-bordered table-striped" id="example1">
                         <thead >
                             <tr class="text-center">
+                                <th scope="col">No</th>
                                 <th scope="col">Nama Obat</th>
                                 <th scope="col">Dosis Dewasa</th>
                                 <th scope="col">Takaran/Hari</th>
@@ -52,6 +53,7 @@
                         <tbody>
                             @foreach ($listObat as $index => $obat)
                                 <tr class="text-center">
+                                    <th scope="row">{{ $index+1 }}</th>
                                     <th scope="row">{{ $obat['kode_obat'] }}</th>
                                     <th scope="row">{{ $obat['dosis_dewasa'] }}</th>
                                     <th scope="row">{{ $obat['takaran_per_hari'] }}</th>
