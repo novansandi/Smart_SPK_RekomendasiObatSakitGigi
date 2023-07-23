@@ -8,7 +8,7 @@
                     <h1 class="display-1 text-white mb-md-4">Sistem Informasi Rekomendasi Obat Sakit Gigi</h1>
                     <div class="pt-2">
                         <a href="#hitungdosis" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Rekomendasi Obat</a>
-                        <a href="#rekomendasi" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Hitung Dosis Anda</a>
+                        <a href="#rekomendasi" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Rekomendasi Dosis</a>
                     </div>
                 </div>
             </div>
@@ -49,56 +49,34 @@
     <!-- Search Start -->
     <div class="container-fluid bg-primary py-5" id="rekomendasi">
         <div class="container py-5">
-            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-                <h5 class="d-inline-block text-white text-uppercase border-bottom border-5">Hitung Dosis Anda</h5>
-                @if ($usiaPerhitungan && $dosis > 0)
-                    <h5 class="text-white fw-normal">Perhitungan ini hanya untuk umur > 8 Tahun</h5>
-                @else
-                    <h5 class="text-white fw-normal">Masukkan usia anda untuk mendapatkan perhitungan dosis!</h5>
-                @endif
+            <div class="text-center mx-auto mb-3" style="max-width: 500px;">
+                <h5 class="d-inline-block  text-uppercase border-bottom border-5">Dosis Obat</h5>
             </div>
-            <div class="mx-auto" style="width: 100%; max-width: 600px;">
-                <div class="input-group">
-                    <input type="number" wire:model="usia" class="form-control border-primary w-50" placeholder="Masukkan Umur Anda">
-                    <button class="btn btn-dark border-0 w-25" wire:click="hitungDosis()">
-                        Hitung <i class="fa fa-calculator"></i>
-                    </button>
-                </div>
-            </div>
-            @if ($errMessage)
-            <div class="alert alert-danger" role="alert">
-                {{$errMessage}}
-              </div>
-            @endif
-           
-            
-            @if(count($data)>0)
-              <div class="table-responsive" align="center">
-                 @if ($usiaPerhitungan && $dosis > 0)
-                    <p align="center" style="color:white;">
-                        Berdasarkan perhitungan {{$usiaPerhitungan > 8 ? 'diling' : "young"}}, dosis maksimum untuk usia {{$usiaPerhitungan}} tahun adalah {{$dosis}} mg
-                    </p>
-                @endif
+            <p align="center" style="color: white;">
+                dosis yang tertera hanya kisaran jumlah secara umum, beri tahu dokter jika anda ingin tahu dosis secara tepat sesuai penyakit yang anda keluhkan
+                <br>bawa ke dokter bila anda mempunyai alergi obat atau riwayat penyakit
+            </p>
+              <div class="table-responsive" align="center"> 
                 <table class="table mt-4" style="color: white;text-align: center;">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Obat</th>
-                            <th>Dosis</th>
+                            <th>Dosis Maksimal/Hari</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($data as $key => $item)
+                       @foreach($data as $key => $item)
                         <tr>
                             <td>{{$key+1}}</td>
                             <td>{{$item['kode_obat']}}</td>
-                            <td>{{$item['dosis']}} mg</td>
+                            <td>{{$item['dosis']}}</td>
                         </tr>
-                        @endforeach
+                       @endforeach
                     </tbody>
                 </table>
             </div>
-            @endif
+           
         </div>
     </div>
     <!-- Search End -->
