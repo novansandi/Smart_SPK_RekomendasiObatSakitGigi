@@ -31,7 +31,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Total Obat</span>
                 <span class="info-box-number">
-                  
+                  {{$obat}}
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -44,7 +44,9 @@
               <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-list"></i></span>
               <div class="info-box-content">
                 <span class="info-box-text">Total Kriteria</span>
-                <span class="info-box-number"></span>
+                <span class="info-box-number">
+                  {{$kriteria}}
+                </span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -57,7 +59,7 @@
               <div class="info-box-content">
                 <span class="info-box-text">Total Subkriteria</span>
                 <span class="info-box-number">
-                  
+                  {{$subkriteria}}
                 </span>
               </div>
               <!-- /.info-box-content -->

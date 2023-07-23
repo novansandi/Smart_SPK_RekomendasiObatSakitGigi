@@ -10,6 +10,7 @@ use App\Http\Livewire\RekomendasiObatComponent;
 use App\Http\Livewire\SmartComponent;
 use App\Http\Livewire\SubkriteriaComponent;
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\SubKriteriaController;
 use App\Http\Controllers\ObatController;
@@ -25,7 +26,7 @@ use App\Http\Controllers\ObatController;
 */
 
 Route::middleware(['auth'])->group(function () {
-    Route::view('/dashboard', 'dashboard');
+    Route::get('/dashboard', [HomeController::class,'index']);
     Route::get('/kriteria', KriteriaComponent::class);
     Route::get('/subkriteria', SubkriteriaComponent::class);
     Route::get('/smart', SmartComponent::class);
