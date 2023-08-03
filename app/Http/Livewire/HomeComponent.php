@@ -16,6 +16,8 @@ class HomeComponent extends Component
 
     public $listUsia = [];
 
+    public $listKeluhan = [];
+
     public $bentukId = 0;
     public $hargaId = 0;
     public $usiaId = 0;
@@ -23,7 +25,8 @@ class HomeComponent extends Component
     public $filter = [
         "bentuk" => 14,
         "harga" => 10,
-        "usia" => 18
+        "usia" => 18,
+        "keluhan"=>1,
     ];
 
     public $listObat = [];
@@ -38,6 +41,7 @@ class HomeComponent extends Component
         $this->bentukId = Kriteria::where("kriterias.nama_kriteria", '=', "bentuk")->get()->toArray();
         $this->hargaId = Kriteria::where("kriterias.nama_kriteria", '=', "harga")->get()->toArray();
         $this->usiaId = Kriteria::where("kriterias.nama_kriteria", '=', "usia")->get()->toArray();
+        $this->listKeluhan = json_decode(json_encode(DB::table('keluhan')->get()),true);
 
         if ($this->bentukId && $this->hargaId && $this->usiaId) {
             $this->bentukId = $this->bentukId[0]["id"];
@@ -77,7 +81,19 @@ class HomeComponent extends Component
         }
 
         $temp = array_unique($temp);
-        $this->listObat = DB::table('obats')->whereIn('id',$temp)->get();
+        $fix = [];
+        foreach ($temp as $key => $value) 
+        {
+           $keluhanObat = DB::table('keluhan_obat')->where('obat_id',$value)->first();
+           if($keluhanObat)
+           {
+                if($keluhanObat->keluhan_id == $this->filter['keluhan'])
+                {
+                    array_push($fix, $value);
+                }
+           }
+        }
+        $this->listObat = DB::table('obats')->whereIn('id',$fix)->get();
         $this->listObat = json_decode(json_encode($this->listObat),true);
     }
 

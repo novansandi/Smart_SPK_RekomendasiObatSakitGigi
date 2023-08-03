@@ -89,7 +89,7 @@
                 <h5 class="d-inline-block  text-uppercase border-bottom border-5">Rekomendasi Obat</h5>
                 <h5 class="fw-normal">Pilih sesuai kriteria anda</h5>
             </div>
-            <div class="mx-auto" style="width: 100%; max-width: 600px;">
+            <div class="mx-auto" style="width: 100%; max-width: 100%;">
                 <div class="input-group">
                     <select class="form-control" id="inputGroupSelectbentuk" style="min-width: 150px;background-color: white;" wire:model="filter.bentuk">
                         <option selected disabled>Pilih Bentuk</option>
@@ -107,6 +107,12 @@
                         <option selected disabled>Pilih Usia</option>
                         @foreach ($listUsia as $usia)
                             <option value="{{$usia["id"]}}">{{$usia["nama_subkriteria"]}}</option>
+                        @endforeach
+                    </select>
+                     <select class="form-control" id="inputGroupSelectKeluhan" style="min-width: 150px;background-color: white;" wire:model="filter.keluhan">
+                        <option selected disabled>Pilih Usia</option>
+                        @foreach ($listKeluhan as $keluhan)
+                            <option value="{{$keluhan["id"]}}">{{$keluhan["nama"]}}</option>
                         @endforeach
                     </select>
                     <button class="btn btn-dark border-0 w-25" wire:click="rekom()">Temukan <i class="fa fa-search"></i></button>
