@@ -90,32 +90,45 @@
                 <h5 class="fw-normal">Pilih sesuai kriteria anda</h5>
             </div>
             <div class="mx-auto" style="width: 100%; max-width: 100%;">
-                <div class="input-group">
-                    <select class="form-control" id="inputGroupSelectbentuk" style="min-width: 150px;background-color: white;" wire:model="filter.bentuk">
+                <div class="row">
+                    <div class="col-md-3">
+                        <select class="form-control" id="inputGroupSelectbentuk" style="min-width: 150px;background-color: white;" wire:model="filter.bentuk">
                         <option selected disabled>Pilih Bentuk</option>
                         @foreach ($listBentuk as $bentuk)
                             <option value="{{$bentuk["id"]}}">{{$bentuk['nama_subkriteria']}}</option>
                         @endforeach
                     </select>
-                    <select class="form-control" id="inputGroupSelectharga" style="min-width: 150px;background-color: white;" wire:model="filter.harga">
-                        <option selected disabled>Pilih Harga</option>
-                        @foreach ($listHarga as $harga)
-                            <option value="{{$harga["id"]}}">{{$harga["nama_subkriteria"]}}</option>
-                        @endforeach
-                    </select>
-                    <select class="form-control" id="inputGroupSelectusia" style="min-width: 150px;background-color: white;" wire:model="filter.usia">
-                        <option selected disabled>Pilih Usia</option>
-                        @foreach ($listUsia as $usia)
-                            <option value="{{$usia["id"]}}">{{$usia["nama_subkriteria"]}}</option>
-                        @endforeach
-                    </select>
-                     <select class="form-control" id="inputGroupSelectKeluhan" style="min-width: 150px;background-color: white;" wire:model="filter.keluhan">
-                        <option selected disabled>Pilih Usia</option>
-                        @foreach ($listKeluhan as $keluhan)
-                            <option value="{{$keluhan["id"]}}">{{$keluhan["nama"]}}</option>
-                        @endforeach
-                    </select>
-                    <button class="btn btn-dark border-0 w-25" wire:click="rekom()">Temukan <i class="fa fa-search"></i></button>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="inputGroupSelectharga" style="min-width: 150px;background-color: white;" wire:model="filter.harga">
+                            <option selected disabled>Pilih Harga</option>
+                            @foreach ($listHarga as $harga)
+                                <option value="{{$harga["id"]}}">{{$harga["nama_subkriteria"]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="inputGroupSelectusia" style="min-width: 150px;background-color: white;" wire:model="filter.usia">
+                            <option selected disabled>Pilih Usia</option>
+                            @foreach ($listUsia as $usia)
+                                <option value="{{$usia["id"]}}">{{$usia["nama_subkriteria"]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                         <select class="form-control" id="inputGroupSelectKeluhan" style="min-width: 150px;background-color: white;" wire:model="filter.keluhan">
+                            <option selected disabled>Pilih Usia</option>
+                            @foreach ($listKeluhan as $keluhan)
+                                <option value="{{$keluhan["id"]}}">{{$keluhan["nama"]}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="row pt-4">
+                    <div class="col-md-12" align="center">
+                        <button class="btn btn-dark border-0" wire:click="rekom()">Temukan <i class="fa fa-search"></i></button>
+                    </div>
                 </div>
             </div>
             @if(count($listObat) > 0)
