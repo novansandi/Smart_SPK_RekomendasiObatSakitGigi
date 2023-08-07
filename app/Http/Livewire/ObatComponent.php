@@ -7,11 +7,12 @@ use App\Models\Kriteria;
 use App\Models\Obat;
 use App\Models\Subkriteria;
 use Livewire\Component;
-
+use DB;
 class ObatComponent extends Component
 {
     public $kode_obat,$dosis_dewasa = 0, $subkriteria_id;
     public $listObat = [];
+    public $listKeluhan = [];
     public $listKriteria;
     public $search;
 
@@ -37,6 +38,8 @@ class ObatComponent extends Component
                 ->where('kriteria_id', '=', $kriteria['id'])
                 ->get()->toArray();
         }
+
+        $this->listKeluhan = json_decode(json_encode(DB::table('keluhan')->get()),true);
     }
 
     public function emptyForm()
@@ -52,7 +55,6 @@ class ObatComponent extends Component
         $this->mode = 'edit';
         $this->kode_obat = $this->selected["kode_obat"];
         $this->dosis_dewasa = $this->selected["dosis_dewasa"];
-        //dd($this->selected);
     }
 
     public function delete($index)
@@ -114,6 +116,7 @@ class ObatComponent extends Component
                                 }
                             }
                         }
+                        
                     } else {
                         $this->errorMessage = 'gagal menambahkan data obat';
                         return;
@@ -193,6 +196,12 @@ class ObatComponent extends Component
                 {
                     array_push($obat["value"], $data["cost"]);
                 }
+            }
+            $obat['keluhan'] = [];
+            $keluhan = DB::table('keluhan_obat')->where('obat_id',$obat['id'])->get();
+            foreach ($keluhan as $key => $value) {
+               $keluhanData = DB::table('keluhan')->where('id',$value->keluhan_id)->first();
+               $obat['keluhan'][$value->keluhan_id] = $keluhanData->nama;
             }
         }
     }

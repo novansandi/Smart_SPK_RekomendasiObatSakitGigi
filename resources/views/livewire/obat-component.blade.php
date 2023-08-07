@@ -47,6 +47,7 @@
                                 @foreach ($listKriteria as $kriteria)
                                     <th scope="col">{{ $kriteria['nama_kriteria'] }}</th>
                                 @endforeach
+                                <th scope="col">Keluhan</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -62,6 +63,13 @@
                                             {{ $obat['nama_subkriteria'][$index2] }}
                                         </td>
                                     @endforeach
+                                    <th scope="row">
+                                        <ul>
+                                            @foreach($obat['keluhan'] as $keluhanIitem => $keluhanVvalue)
+                                                <li>{{$keluhanVvalue}}</li>
+                                            @endforeach
+                                        </ul>
+                                    </th>
                                     <td class="d-flex justify-content-end">
                                         <button type="button" class="btn btn-warning" style="margin-right: 15px"
                                             data-toggle="modal" data-target="#obatModalEdit{{$obat['id']}}">
@@ -111,6 +119,22 @@
                                                                     </select>
                                                                 </div>
                                                             @endforeach
+                                                            <div class="input-group mb-3">
+                                                                <button style="min-width: 122px;" class="btn btn-primary" disabled type="button">Keluhan</button>
+                                                                <ul>
+                                                                    @foreach ($listKeluhan as $listKeluhanIndex => $listKeluhanValue)
+                                                                            <li>
+                                                                                @if(isset($obat['keluhan'][$listKeluhanValue['id']]))
+                                                                                <input type="checkbox" name="keluhan_id[]" value="{{$listKeluhanValue['id']}}" checked> 
+                                                                                {{$listKeluhanValue['nama']}}
+                                                                                @else
+                                                                                <input type="checkbox" name="keluhan_id[]" value="{{$listKeluhanValue['id']}}" > 
+                                                                                {{$listKeluhanValue['nama']}}
+                                                                                @endif 
+                                                                            </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -197,6 +221,17 @@
                                             </select>
                                         </div>
                                     @endforeach
+                                   
+                                    <div class="input-group mb-3">
+                                        <button style="min-width: 122px;" class="btn btn-primary" disabled type="button">Keluhan</button>
+                                        <ul>
+                                            @foreach ($listKeluhan as $listKeluhanIndex => $listKeluhanValue)
+                                                    <li>
+                                                        <input type="checkbox" name="keluhan_id[]" value="{{$listKeluhanValue['id']}}"> {{$listKeluhanValue['nama']}} 
+                                                    </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <div class="modal-footer">

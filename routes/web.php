@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\SubKriteriaController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\KeluhanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,3 +60,9 @@ Route::get('/subkriteria_delete/{id}', [SubKriteriaController::class,'delete']);
 Route::post('/obat_store', [ObatController::class,'store']);
 Route::post('/obat_update/{id}', [ObatController::class,'update']);
 Route::get('/obat_delete/{id}', [ObatController::class,'delete']);
+
+//keluhan
+Route::get('/keluhan', [KeluhanController::class,'index']);
+Route::post('/keluhan_store', [KeluhanController::class,'store']);
+Route::post('/keluhan_update/{id}', [KeluhanController::class,'update']);
+Route::get('/keluhan_delete/{id}', [KeluhanController::class,'delete']);

@@ -16,10 +16,8 @@ class ObatController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
         $createdAt = Carbon::now('Asia/Jakarta')->format('Y-m-d H:i:s');
         $listKriteria = json_decode(json_encode(DB::table('kriterias')->where('is_deleted',0)->get()),true);
-        //dd($listKriteria);
         $obatId = DB::table('obats')->insertGetId([
             'kode_obat' => $request->kode_obat,
             'dosis_dewasa'=>$request->dosis_dewasa,
@@ -55,6 +53,22 @@ class ObatController extends Controller
                                 'created_at'=>$createdAt
                         ]);
                     }
+                }
+            }
+        }
+
+        if($request->keluhan_id)
+        {
+            if(count($request->keluhan_id) > 0)
+            {
+                foreach ($request->keluhan_id as $key => $value) 
+                {
+                    DB::table('keluhan_obat')->insert([
+                        'obat_id'=>$obatId,
+                        'keluhan_id'=>$value,
+                        'created_at'=>$createdAt,
+                        'updated_at'=>$createdAt
+                    ]);
                 }
             }
         }
@@ -109,6 +123,22 @@ class ObatController extends Controller
                                 'updated_at'=>$updatedAt
                         ]);
                     }
+                }
+            }
+        }
+        if($request->keluhan_id)
+        {
+            if(count($request->keluhan_id) > 0)
+            {
+                DB::table('keluhan_obat')->where('obat_id',$id)->delete();
+                foreach ($request->keluhan_id as $key => $value) 
+                {
+                    DB::table('keluhan_obat')->insert([
+                        'obat_id'=>$id,
+                        'keluhan_id'=>$value,
+                        'created_at'=>$updatedAt,
+                        'updated_at'=>$updatedAt
+                    ]);
                 }
             }
         }

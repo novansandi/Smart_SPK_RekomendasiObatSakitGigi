@@ -88,6 +88,13 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{url('keluhan')}}" class="nav-link {{Request::segment(1) == 'keluhan'?'active':''}}">
+              <i class="nav-icon fa fa-user"></i>
+              <p>Keluhan</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
             <a href="{{url('obat')}}" class="nav-link {{Request::segment(1) == 'obat'?'active':''}}">
               <i class="nav-icon fa fa-medkit"></i>
               <p>Obat</p>
